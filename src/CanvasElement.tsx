@@ -9,7 +9,7 @@ interface CanvasProps {
 }
 
 function CanvasElement(props: CanvasProps) {
-  //deconstruct props
+  // Destructure props
   const {height, width, id, draw} = props;
 
   // Has to be null instead of undefined
@@ -28,7 +28,7 @@ function CanvasElement(props: CanvasProps) {
 
     draw(context);
 
-  }, [draw])  
+  }, [draw]);
 
   return (
     <canvas ref={canvasRef} height={height} width={width} id={id}/>
