@@ -1,4 +1,5 @@
 import { vec2 } from "./shared/Interfaces";
+import { getDistance } from "./shared/MathFuncs";
 
 export class Entity {
   // TODO: Change color to enum later probably
@@ -8,6 +9,7 @@ export class Entity {
   public radius: number;
   private health: number;
   public color: string;
+  public hasCollided: boolean;
 
   constructor(x: number, y: number, velocity: vec2, radius: number, health: number, color: string) {
     // Init variables
@@ -17,6 +19,7 @@ export class Entity {
     this.radius = radius;
     this.health = health;
     this.color = color;
+    this.hasCollided = false;
   }
 
   damage(health: number): void {
@@ -53,37 +56,41 @@ export class Entity {
 
     this.x = newX;
     this.y = newY;
-    console.log(`x: ${this.x}, y: ${this.y}`);
   }
 
-  // isOutOfBounds(height: number, width: number): CollisionDirection[] {
-  //   let outDirections: CollisionDirection[]  = [];
-  //   if (this.x - this.radius <= 0) {
-  //     outDirections.push(CollisionDirection.LEFT);
-  //   }
-  //   if (this.x + this.radius >= width) {
-  //     outDirections.push(CollisionDirection.RIGHT);
-  //   }
-  //   if (this.y - this.radius <= 0) {
-  //     outDirections.push(CollisionDirection.UP);
-  //   } 
-  //   if (this.y + this.radius >= height) {
-  //     outDirections.push(CollisionDirection.DOWN);
-  //   } 
-  //   return outDirections;
-  // }
+  collisionHandler(Entities: Entity[]) {
+    return new Promise((res) => {
+      for (let i = 0; i < Entities.length; i++) {
+        if (Entities[i] !== this) {
+          const dist = getDistance({x: this.x, y: this.y}, {x: Entities[i].x, y: Entities[i].y});
+          if (dist <= (this.radius + Entities[i].radius)) {
+            this.hasCollided = true;            
+          }
+        }
+      }
+      res(true);
+    })
+  }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    ctx.strokeStyle = this.color;
+
+    if(!this.hasCollided) {
+      ctx.strokeStyle = this.color;
+      ctx.fillStyle = this.color;
+    } else {
+      ctx.strokeStyle = "yellow";
+      ctx.fillStyle = "yellow";
+      this.hasCollided = false;
+    }
+    
     ctx.fill();
     ctx.stroke();
   }
 
   animate(): void {
     requestAnimationFrame(this.animate);
-    
   }
 
 }

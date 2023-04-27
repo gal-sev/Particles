@@ -4,16 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { Game } from './Game';
 import { Player } from './Player';
 import { Entity } from './Entity';
+import { WeaponType } from './shared/Enums';
 
 function App() {
   const [game, setGame] = useState<Game | undefined>(undefined);
   const height = 500;
   const width = 500;
-
   useEffect(() => {
     setGame(new Game(height, width, [
-      new Player(100, 100, {x: 20, y: 10}, 20, 100, "green", 0),
-      new Entity(100, 150, {x: -1, y: 1}, 20, 100, "red"),
+      new Player(300, 100, {x: -2, y: 0}, 20, 100, "green", WeaponType.HAMMER),
+      new Player(400, 100, {x: +2, y: 0}, 20, 100, "green", WeaponType.HAMMER),
+      new Entity(500, 100, {x: 1, y: 0}, 20, 100, "green"),
     ]));
   }, []);
 
