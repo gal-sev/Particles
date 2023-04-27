@@ -82,15 +82,16 @@ export class Entity {
     } else {
       ctx.strokeStyle = "yellow";
       ctx.fillStyle = "yellow";
-      this.hasCollided = false;
+      this.triggerCollision();
     }
     
     ctx.fill();
     ctx.stroke();
   }
 
-  animate(): void {
-    requestAnimationFrame(this.animate);
+  triggerCollision() {
+    this.hasCollided = false;
+    //TODO: Add some collision effect?
   }
 
 }
