@@ -18,7 +18,7 @@ export class Game {
     ctx.clearRect(0, 0, this.width, this.height);
     
     for (let i = 0; i < this.Entities.length; i++) {
-      this.Entities[i].move();
+      this.Entities[i].move(this.height, this.width);
       this.Entities[i].draw(ctx);
 
     }    

@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import CanvasElement from "./CanvasElement";
 import React, { useEffect, useState } from 'react';
 import { Game } from './Game';
@@ -12,8 +12,8 @@ function App() {
 
   useEffect(() => {
     setGame(new Game(height, width, [
-      new Player(100, 100, {x: 0, y: 1}, 100, "green", 0),
-      new Entity(100, 150, {x: -1, y: 1}, 100, "red"),
+      new Player(100, 100, {x: 20, y: 10}, 20, 100, "green", 0),
+      new Entity(100, 150, {x: -1, y: 1}, 20, 100, "red"),
     ]));
   }, []);
 
